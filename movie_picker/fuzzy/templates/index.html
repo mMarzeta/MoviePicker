@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>MooviePicker</title>
+    <script>
+        function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
+    </script>
 </head>
 <body>
-    Witam
+
+<form action="{% url 'fuzzy:user_input' %}" method="post">
+    {% csrf_token %}
+    Color:<br>
+
+    <input type="radio" name="color" value="bw">Black and white</input><br>
+    <input type="radio" name="color" value="color" checked>Color</input><br>
+
+    Director:       <input type="text" name="director" value="Roman Polanski"/><br>
+    Country:        <input type="text" name="country" value="USA"/><br>
+
+    Duration [h]:   <input type="range" name="duration" value="2" min="0" step="0.1" max="4"
+                           oninput="duration_output_id.value = duration.value"/>
+                    <output name="duration_output" id="duration_output_id">2</output>[h]<br>
+
+    Imdb score:     <input type="range" name="imdb_score" value="7.8" min="0" step="0.1" max="10"
+                           oninput="imdb_output_id.value = imdb_score.value"/>
+                    <output name="imdb_output_name" id="imdb_output_id">7.8</output><br>
+
+    <!--Tutaj trzeba zmienic na np. stare, nowe, bardzo stare-->
+    Year:           <input type="range" name="year" value="2007" min="1930" step="1" max="2017"
+                           oninput="year_output_id.value = year.value"/>
+                    <output name="year_output" id="year_output_id">2007</output>r.<br>
+
+    Genre:          <input type="text" name="genre" value="Horror"/><br>
+
+    
+    <input type="submit" value="Search"/>
+
+</form>
+
 </body>
 </html>

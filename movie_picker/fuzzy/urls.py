@@ -5,5 +5,5 @@ from fuzzy.views import user_input
 
 
 urlpatterns = [
-    url(r'^$', user_input),
+    url(r'^$', user_input, name='user_input'),
 ]
