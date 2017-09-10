@@ -26,7 +26,9 @@ SECRET_KEY = 't6+ijl87__m1dk48e2)8xz2$x9+eh-$q%&o2$yf8-^=-+ecz$&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'moovie-picker.herokuapp.com',
+]
 
 
 # Application definition
