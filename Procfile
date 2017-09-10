@@ -1,1 +1,1 @@
-web: gunicorn movie_picker.wsgi --log-file -
+web: gunicorn movie_picker.movie_picker.wsgi --log-file -
