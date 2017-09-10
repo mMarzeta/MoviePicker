@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'moovie-picker.herokuapp.com',
+    'localhost',
 ]
 
 
@@ -71,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movie_picker.wsgi.application'
+WSGI_APPLICATION = 'movie_picker.movie_picker.wsgi.application'
 
 
 # Database
