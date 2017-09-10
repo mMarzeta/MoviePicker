@@ -1,1 +1,0 @@
-web: python3 movie_picker/manage.py runserver
