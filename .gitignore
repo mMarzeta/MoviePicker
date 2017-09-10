@@ -44,4 +44,7 @@ var/
 *.egg
 *.iml
 .idea
+venv
+os
+
 
