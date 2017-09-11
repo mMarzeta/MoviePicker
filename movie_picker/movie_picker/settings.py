@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,10 +25,7 @@ SECRET_KEY = 't6+ijl87__m1dk48e2)8xz2$x9+eh-$q%&o2$yf8-^=-+ecz$&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'moovie-picker.herokuapp.com',
-    'localhost',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'movie_picker.fuzzy',
+    'fuzzy',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +51,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'movie_picker.movie_picker.urls'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+ROOT_URLCONF = 'movie_picker.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movie_picker.movie_picker.wsgi.application'
+WSGI_APPLICATION = 'movie_picker.wsgi.application'
 
 
 # Database
@@ -91,10 +91,6 @@ DATABASES = {
         'PORT' : '5432',
     }
 }
-
-#for configuration to heroku
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 
 # Password validation

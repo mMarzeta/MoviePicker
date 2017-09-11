@@ -16,7 +16,7 @@ class DjangoMigrations(models.Model):
     applied = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'django_migrations'
 
 
@@ -52,5 +52,5 @@ class Movies(models.Model):
     movie_facebook_likes = models.DecimalField(max_digits=7, decimal_places=1, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'movies'
