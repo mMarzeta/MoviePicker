@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,10 @@ SECRET_KEY = 't6+ijl87__m1dk48e2)8xz2$x9+eh-$q%&o2$yf8-^=-+ecz$&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'moovie-picker.herokuapp.com',
+    'localhost',
+]
 
 
 # Application definition
@@ -37,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fuzzy',
+    'movie_picker.fuzzy',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'movie_picker.urls'
+ROOT_URLCONF = 'movie_picker.movie_picker.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movie_picker.wsgi.application'
+WSGI_APPLICATION = 'movie_picker.movie_picker.wsgi.application'
 
 
 # Database
@@ -76,10 +80,21 @@ WSGI_APPLICATION = 'movie_picker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #above changed, for migrating to psql
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'postgres',
+        'USER' : 'postgres',
+        'PASSWORD' : 'postgres',
+        'HOST' : 'localhost',
+        'PORT' : '5432',
     }
 }
+
+#for configuration to heroku
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
