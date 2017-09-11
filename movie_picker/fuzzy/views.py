@@ -6,18 +6,15 @@ from fuzzy.models import Movie
 
 def user_input(request):
     if request.method == "POST":
-        print('chuj')
         form = MovieForm(request.POST)
         if form.is_valid():
-            print('dupa')
-            movie = Movie.objects.create(color=request.color,
-                                         directory=request.directory,
-                                         country=request.country,
-                                         duration=request.duration,
-                                         imdb_score=request.imdb_score,
-                                         year=request.year)
-            movie.save()
-            return render(request, 'templates/result.html', {'movie', movie})
+            output = {}
+            output['color'] = form.cleaned_data['color']
+            output['directory'] = form.cleaned_data['directory']
+            output['duration'] = form.cleaned_data['duration']
+            output['imdb_score'] = form.cleaned_data['imdb_score']
+            output['year'] = form.cleaned_data['year']
+            return render(request, 'result.html', output)
     else:
         form = MovieForm()
 
