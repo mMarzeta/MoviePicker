@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-from fuzzy.forms import MovieForm
-from fuzzy.models import Movie
+from movie_picker.fuzzy.forms import MovieForm
 
 
 def user_input(request):

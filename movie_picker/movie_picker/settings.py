@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fuzzy',
+    'movie_picker.fuzzy',
     'crispy_forms',
 ]
 
@@ -54,7 +54,8 @@ MIDDLEWARE = [
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
-ROOT_URLCONF = 'movie_picker.urls'
+ROOT_URLCONF = 'movie_picker.movie_picker.urls'
+
 
 TEMPLATES = [
     {
@@ -72,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movie_picker.wsgi.application'
+WSGI_APPLICATION = 'movie_picker.movie_picker.wsgi.application'
 
 
 # Database

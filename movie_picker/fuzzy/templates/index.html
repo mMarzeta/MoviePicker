@@ -11,7 +11,7 @@
 <body>
 <div class="container">
 
-    <form action="{% url 'fuzzy:user_input' %}" method="post">
+    <form action="{% url 'movie_picker.fuzzy:user_input' %}" method="post">
         {% csrf_token %}
         {{ form|crispy}}
         <input class="btn btn-default" type="submit" value="Search"/>
