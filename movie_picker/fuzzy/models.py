@@ -3,7 +3,7 @@ from django.db import models
 
 class Movie(models.Model):
     color = models.CharField(max_length=20,
-                             choices=(('BW', 'Black and white'), ('CLR', 'COLOR')),
+                             choices=(('BW', 'Black and white'), ('CLR', 'COLOR'),),
                              default='CLR')
     director = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
