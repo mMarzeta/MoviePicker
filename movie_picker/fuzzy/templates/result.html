@@ -15,6 +15,12 @@
 <div class="container">
     Chosen attributes:<br>
     Rezultat: {{ result }}
+
+    <ul>
+        {% for movie in queryset %}
+            <li>{{ movie.movie_title }}</li>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>
