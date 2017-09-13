@@ -39,9 +39,9 @@ class MovieForm(forms.Form):
 
     genre = forms.ChoiceField(choices=choices)
 
-    duration = forms.DecimalField(widget=RangeInput,
+    duration = forms.FloatField(widget=RangeInput,
                                   label='Duration: <br>Short <---------> Long')
 
-    imdb_score = forms.DecimalField(widget=RangeInput, label="Quality:<br> Horrible  <---------> Masterpiece")
+    imdb_score = forms.FloatField(widget=RangeInput, label="Quality:<br> Horrible  <---------> Masterpiece")
 
-    year = forms.DecimalField(widget=RangeInput, label="Year of production:<br> Very old  <---------> Very new")
+    year = forms.FloatField(widget=RangeInput, label="Year of production:<br> Very old  <---------> Very new")

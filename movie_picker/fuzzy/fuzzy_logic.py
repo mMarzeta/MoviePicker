@@ -99,7 +99,7 @@ def fuzzyfy(duration, quality, year):
     picker.compute()
 
     #shows output space
-    fuz_output.view(sim=picker)
+    # fuz_output.view(sim=picker)
 
     return picker.output['movie rank']
 

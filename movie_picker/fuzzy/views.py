@@ -1,18 +1,22 @@
 from django.shortcuts import render
 
 from movie_picker.fuzzy.forms import MovieForm
+from movie_picker.fuzzy.fuzzy_logic import fuzzyfy
 
 
 def user_input(request):
     if request.method == "POST":
         form = MovieForm(request.POST)
         if form.is_valid():
-            output = {}
-            output['genre'] = form.cleaned_data['genre']
-            output['duration'] =  round(form.cleaned_data['duration'] / 100 * 15, 4)
-            output['imdb_score'] = round(form.cleaned_data['imdb_score'] / 100 * 15, 4)
-            output['year'] = round(form.cleaned_data['year'] / 100 * 15, 4)
-            return render(request, 'result.html', output)
+            result = {}
+            result['genre'] = form.cleaned_data['genre']
+            duration = form.cleaned_data['duration'] / 100 * 15
+            imdb_score = form.cleaned_data['imdb_score'] / 100 * 15
+            year = form.cleaned_data['year'] / 100 * 15
+
+            result['result'] = fuzzyfy(duration, imdb_score, year)
+
+            return render(request, 'result.html', result)
     else:
         form = MovieForm()
 
