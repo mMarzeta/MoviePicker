@@ -47,6 +47,40 @@ def fuzzyfy(duration, quality, year):
     rulem4 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['good'], fuz_output['good'])
     rulem5 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['verry old'] | fuz_year['old'] | fuz_year['average']), fuz_output['good'])
     rulem6 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['new'] | fuz_year['verry new']), fuz_output['masterpiece'])
+    # rule set
+    rule1 = ctrl.Rule(fuz_duration['short'] & (fuz_quality['horrible'] | fuz_quality['bad']), fuz_output['poor'])
+    rule2 = ctrl.Rule(fuz_quality['average'] | fuz_quality['good'], fuz_output['good'])
+    rule3 = ctrl.Rule(fuz_quality['masterpiece'] & fuz_duration['long'], fuz_output['masterpiece'])
+    rule4 = ctrl.Rule((fuz_year['verry old'] | fuz_year['old']) & (fuz_quality['horrible'] | fuz_quality['bad']),
+                      fuz_output['poor'])
+
+
+    # dla long
+    tmp_quality = ['horrible', 'bad', 'average', 'good', 'masterpiece']
+    tmp_year = ['very old', 'old', 'average', 'new', 'very new']
+    rules_l = []
+
+    # dla horrible i bad i wszystkich lat
+    for i in range(2):
+        for j in range(5):
+            rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality[tmp_quality[i]] & fuz_year[tmp_year[j]]))
+
+    # dla average w latach very old, old, average
+    for i in range(3):
+        rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['average'] & fuz_year[i]))
+    rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['average'] & fuz_year['new']))
+    rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['average'] & fuz_year['very new']))
+
+    # dla good w latach od very_old do new
+    for i in range(4):
+        rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['good'] & fuz_year[i]))
+    rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['good'] & fuz_year['very new']))
+
+    # dla masterpiece w latach very old do average
+    for i in range(3):
+        rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['masterpiece'] & fuz_year[tmp_year[i]]))
+    rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['masterpiece'] & fuz_year['new']))
+    rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['masterpiece'] & fuz_year[tmp_year['very new']]))
 
     #control system
     movie_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
