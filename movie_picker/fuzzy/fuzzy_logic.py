@@ -1,7 +1,7 @@
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
-
+from movie_picker.fuzzy.models import Movies
 
 #takes duration, quality, year - returns computed value 0-10
 #duration - [0, 15], as well as quality and year.
@@ -92,8 +92,27 @@ def fuzzyfy(duration, quality, year):
 
     picker.compute()
 
-    #shows output space
-    fuz_output.view(sim=picker)
-
     return picker.output['movie rank']
 
+def actualise_fuzzy_movie_rank_db():
+    records = Movies.objects.count()
+    for i in range(1, 5000):
+        try:
+            movie = Movies.objects.get(id=i)
+            movie.fuzzy_movie_rank = fuzzyfy(scale_duration(movie.duration), scale_quality(movie.imdb_score), scale_year(movie.title_year))
+            movie.save()
+            print(i)
+        except Exception:
+            print('no such id', i, sep=' ')
+
+def scale_duration(duration):
+    duration = float(duration)
+    return 15./504. * duration - 5./24.
+
+def scale_quality(quality):
+    quality = float(quality)
+    return 150./79. * quality - 240./79.
+
+def scale_year(year):
+    year = float(year)
+    return 1./7. * year - 273.

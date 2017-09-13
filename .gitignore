@@ -47,4 +47,5 @@ var/
 venv
 os
 
+movie_picker/fuzzy/migrations/0*
 

@@ -50,6 +50,7 @@ class Movies(models.Model):
     imdb_score = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
     aspect_ratio = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     movie_facebook_likes = models.DecimalField(max_digits=7, decimal_places=1, blank=True, null=True)
+    fuzzy_movie_rank = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = True
