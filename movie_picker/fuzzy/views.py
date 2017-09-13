@@ -10,9 +10,9 @@ def user_input(request):
             output = {}
             output['color'] = form.cleaned_data['color']
             output['directory'] = form.cleaned_data['directory']
-            output['duration'] = form.cleaned_data['duration']
-            output['imdb_score'] = form.cleaned_data['imdb_score']
-            output['year'] = form.cleaned_data['year']
+            output['duration'] =  round(form.cleaned_data['duration'] / 100 * 15, 4)
+            output['imdb_score'] = round(form.cleaned_data['imdb_score'] / 100 * 15, 4)
+            output['year'] = round(form.cleaned_data['year'] / 100 * 15, 4)
             return render(request, 'result.html', output)
     else:
         form = MovieForm()

@@ -1,4 +1,9 @@
 from django import forms
+from django.forms.widgets import NumberInput
+
+
+class RangeInput(NumberInput):
+    input_type = 'range'
 
 
 class MovieForm(forms.Form):
@@ -8,11 +13,9 @@ class MovieForm(forms.Form):
     directory = forms.CharField(max_length=100)
     country = forms.CharField(max_length=100)
 
-    duration_choice = ((1, 'Short'), (2, 'Medium'), (3, 'Long')) #podane w godzinach
-    duration = forms.ChoiceField(choices=duration_choice)
+    duration = forms.DecimalField(widget=RangeInput,
+                                    label='Duration: <br>Short <---------> Long')
 
-    rate_choice = ((2, 'Horrible'), (3, 'Bad'), (5, 'Average'), (7, 'Good'), (9, 'Masterpiece'))
-    imdb_score = forms.ChoiceField(choices=rate_choice, label="Quality")
+    imdb_score = forms.DecimalField(widget=RangeInput, label="Quality:<br> Horrible  <---------> Masterpiece")
 
-    year_choice = ((1950, 'Very old'), (1970, 'Old'), (1990, 'A little old'), (2005, 'Average'), (2010, 'New'), (2015, 'Very new'))
-    year = forms.ChoiceField(choices=year_choice)
+    year = forms.DecimalField(widget=RangeInput, label="Year of production:<br> Very old  <---------> Very new")
