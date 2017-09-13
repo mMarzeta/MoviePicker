@@ -1,18 +1,47 @@
 from django import forms
+from django.forms.widgets import NumberInput
+
+from movie_picker.fuzzy.models import Movies
+
+
+class RangeInput(NumberInput):
+    input_type = 'range'
 
 
 class MovieForm(forms.Form):
-    color_choice = (('BW', 'Black and white'), ('CLR', 'Color'),)
-    color = forms.ChoiceField(choices=color_choice)
+    choices = (('Mystery', 'Mystery'),
+               ('Horror', 'Horror'),
+               ('Short', 'Short'),
+               ('Sport', 'Sport'),
+               ('Drama', 'Drama'),
+               ('Musical', 'Musical'),
+               ('History', 'History'),
+               ('War', 'War'),
+               ('Animation', 'Animation'),
+               ('Family', 'Family'),
+               ('Romance', 'Romance'),
+               ('Western', 'Western'),
+               ('Crime', 'Crime'),
+               ('Action', 'Action'),
+               ('Film-Noir', 'Film-Noir'),
+               ('Thriller', 'Thriller'),
+               ('News', 'News'),
+               ('Adventure', 'Adventure'),
+               ('Documentary', 'Documentary'),
+               ('Game-Show', 'Game-Show'),
+               ('Sci-Fi', 'Sci-Fi'),
+               ('Comedy', 'Comedy'),
+               ('Fantasy', 'Fantasy'),
+               ('Reality-TV', 'Reality-TV'),
+               ('Music', 'Music'),
+               ('Biography', 'Biography'),
+               )
 
-    directory = forms.CharField(max_length=100)
-    country = forms.CharField(max_length=100)
+    genre = forms.ChoiceField(choices=choices)
 
-    duration_choice = ((1, 'Short'), (2, 'Medium'), (3, 'Long')) #podane w godzinach
-    duration = forms.ChoiceField(choices=duration_choice)
+    duration = forms.FloatField(widget=RangeInput,
+                                  label='Duration: <br>Short <---------> Long')
 
-    rate_choice = ((2, 'Horrible'), (3, 'Bad'), (5, 'Average'), (7, 'Good'), (9, 'Masterpiece'))
-    imdb_score = forms.ChoiceField(choices=rate_choice, label="Quality")
+    imdb_score = forms.FloatField(widget=RangeInput, label="Quality:<br> Horrible  <---------> Masterpiece")
 
-    year_choice = ((1950, 'Very old'), (1970, 'Old'), (1990, 'A little old'), (2005, 'Average'), (2010, 'New'), (2015, 'Very new'))
-    year = forms.ChoiceField(choices=year_choice)
+    year = forms.FloatField(widget=RangeInput, label="Year of production:<br> Very old  <---------> Very new")

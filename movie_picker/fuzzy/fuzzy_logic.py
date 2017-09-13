@@ -1,7 +1,7 @@
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
-from movie_picker.fuzzy.models import Movies
+
 
 #takes duration, quality, year - returns computed value 0-10
 #duration - [0, 15], as well as quality and year.
