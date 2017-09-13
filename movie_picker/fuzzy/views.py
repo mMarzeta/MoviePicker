@@ -2,8 +2,7 @@ from django.shortcuts import render
 
 from movie_picker.fuzzy.forms import Movies
 from movie_picker.fuzzy.forms import MovieForm
-from movie_picker.fuzzy.fuzzy_logic import fuzzyfy
-
+from movie_picker.fuzzy.fuzzy_logic import fuzzyfy, query_records_around_result
 
 def user_input(request):
     if request.method == "POST":
@@ -16,7 +15,7 @@ def user_input(request):
             year = form.cleaned_data['year'] / 100 * 15
 
             result['result'] = fuzzyfy(duration, imdb_score, year)
-            result['queryset'] = Movies.objects.all()[1:10]
+            result['queryset'] = query_records_around_result(1, result['result'], result['genre'])
 
             return render(request, 'result.html', result)
     else:

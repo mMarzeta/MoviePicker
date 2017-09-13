@@ -1,6 +1,8 @@
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
+from movie_picker.fuzzy.models import Movies
+from django.db.models import Q
 
 
 #takes duration, quality, year - returns computed value 0-10
@@ -116,3 +118,11 @@ def scale_quality(quality):
 def scale_year(year):
     year = float(year)
     return 1./7. * year - 273.
+
+def query_records_around_result(range, result, genre):
+    records = []
+    for record in Movies.objects.all():
+        if record.fuzzy_movie_rank >= result-range and record.fuzzy_movie_rank <= result+range and record.genres.__contains__(genre):
+            records.append(record)
+    return records
+
