@@ -24,11 +24,11 @@ def fuzzyfy(duration, quality, year):
     fuz_quality['good'] = fuzz.gaussmf(fuz_quality.universe, 10.5, 1.5)
     fuz_quality['masterpiece'] = fuzz.gaussmf(fuz_quality.universe, 15, 2)
 
-    fuz_year['verry old'] = fuzz.gaussmf(fuz_year.universe, 0, 1.5)
+    fuz_year['very old'] = fuzz.gaussmf(fuz_year.universe, 0, 1.5)
     fuz_year['old'] = fuzz.gaussmf(fuz_year.universe, 3.5, 1.5)
     fuz_year['average'] = fuzz.gaussmf(fuz_year.universe, 7., 1.5)
     fuz_year['new'] = fuzz.gaussmf(fuz_year.universe, 10.5, 1.5)
-    fuz_year['verry new'] = fuzz.gaussmf(fuz_year.universe, 15., 2)
+    fuz_year['very new'] = fuzz.gaussmf(fuz_year.universe, 15., 2)
 
     fuz_output['poor'] = fuzz.gaussmf(fuz_output.universe, 0, 2.5)
     fuz_output['good'] = fuzz.gaussmf(fuz_output.universe, 5, 2.5)
@@ -36,24 +36,17 @@ def fuzzyfy(duration, quality, year):
 
     #rule set
     rules1 = ctrl.Rule(fuz_duration['short'] & (fuz_quality['horrible'] | fuz_quality['bad'] | fuz_quality['average']), fuz_output['poor'])
-    rules2 = ctrl.Rule(fuz_duration['short'] & fuz_quality['good'] & (fuz_year['verry old'] | fuz_year['old']), fuz_output['poor'])
-    rules3 = ctrl.Rule(fuz_duration['short'] & fuz_quality['good'] & (fuz_year['average'] | fuz_year['new'] | fuz_year['verry new']), fuz_output['good'])
-    rules4 = ctrl.Rule(fuz_duration['short'] & fuz_quality['masterpiece'] & (fuz_year['verry old'] | fuz_year['old'] | fuz_year['average'] | fuz_year['new']), fuz_output['good'])
-    rules5 = ctrl.Rule(fuz_duration['short'] & fuz_quality['masterpiece'] & fuz_year['verry new'], fuz_output['masterpiece'])
+    rules2 = ctrl.Rule(fuz_duration['short'] & fuz_quality['good'] & (fuz_year['very old'] | fuz_year['old']), fuz_output['poor'])
+    rules3 = ctrl.Rule(fuz_duration['short'] & fuz_quality['good'] & (fuz_year['average'] | fuz_year['new'] | fuz_year['very new']), fuz_output['good'])
+    rules4 = ctrl.Rule(fuz_duration['short'] & fuz_quality['masterpiece'] & (fuz_year['very old'] | fuz_year['old'] | fuz_year['average'] | fuz_year['new']), fuz_output['good'])
+    rules5 = ctrl.Rule(fuz_duration['short'] & fuz_quality['masterpiece'] & fuz_year['very new'], fuz_output['masterpiece'])
 
     rulem1 = ctrl.Rule(fuz_duration['medium'] & (fuz_quality['horrible'] | fuz_quality['bad']), fuz_output['poor'])
-    rulem2 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['average'] & (fuz_year['verry old'] | fuz_year['old'] | fuz_year['average']), fuz_output['poor'])
-    rulem3 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['average'] & (fuz_year['new'] | fuz_year['verry new']), fuz_output['good'])
+    rulem2 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['average'] & (fuz_year['very old'] | fuz_year['old'] | fuz_year['average']), fuz_output['poor'])
+    rulem3 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['average'] & (fuz_year['new'] | fuz_year['very new']), fuz_output['good'])
     rulem4 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['good'], fuz_output['good'])
-    rulem5 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['verry old'] | fuz_year['old'] | fuz_year['average']), fuz_output['good'])
-    rulem6 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['new'] | fuz_year['verry new']), fuz_output['masterpiece'])
-    # rule set
-    rule1 = ctrl.Rule(fuz_duration['short'] & (fuz_quality['horrible'] | fuz_quality['bad']), fuz_output['poor'])
-    rule2 = ctrl.Rule(fuz_quality['average'] | fuz_quality['good'], fuz_output['good'])
-    rule3 = ctrl.Rule(fuz_quality['masterpiece'] & fuz_duration['long'], fuz_output['masterpiece'])
-    rule4 = ctrl.Rule((fuz_year['verry old'] | fuz_year['old']) & (fuz_quality['horrible'] | fuz_quality['bad']),
-                      fuz_output['poor'])
-
+    rulem5 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['very old'] | fuz_year['old'] | fuz_year['average']), fuz_output['good'])
+    rulem6 = ctrl.Rule(fuz_duration['medium'] & fuz_quality['masterpiece'] & (fuz_year['new'] | fuz_year['very new']), fuz_output['masterpiece'])
 
     # dla long
     tmp_quality = ['horrible', 'bad', 'average', 'good', 'masterpiece']
@@ -82,8 +75,14 @@ def fuzzyfy(duration, quality, year):
     rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['masterpiece'] & fuz_year['new']))
     rules_l.append(ctrl.Rule(fuz_duration['long'] & fuz_quality['masterpiece'] & fuz_year[tmp_year['very new']]))
 
+    #create list from all rules.
+    all_rules = [rules1, rules2, rules3, rules4, rules5, rulem1, rulem2, rulem3, rulem4, rulem5, rulem6]
+
+    for rule in rules_l:
+        all_rules.append(rule)
+
     #control system
-    movie_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
+    movie_ctrl = ctrl.ControlSystem(all_rules)
     picker = ctrl.ControlSystemSimulation(movie_ctrl)
 
     #symulation
