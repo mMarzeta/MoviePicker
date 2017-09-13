@@ -8,8 +8,7 @@ def user_input(request):
         form = MovieForm(request.POST)
         if form.is_valid():
             output = {}
-            output['color'] = form.cleaned_data['color']
-            output['directory'] = form.cleaned_data['directory']
+            output['genre'] = form.cleaned_data['genre']
             output['duration'] =  round(form.cleaned_data['duration'] / 100 * 15, 4)
             output['imdb_score'] = round(form.cleaned_data['imdb_score'] / 100 * 15, 4)
             output['year'] = round(form.cleaned_data['year'] / 100 * 15, 4)
